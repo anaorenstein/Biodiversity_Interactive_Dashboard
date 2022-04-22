@@ -96,7 +96,7 @@ function buildCharts(sample) {
     // 9. Create the layout for the bar chart. 
     var barLayout = {
       title: "Top 10 Bacteria Cultures Found",
-      margin: { t: 65, l: 130 }
+      margin: { t: 75, l: 130 }
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
@@ -119,7 +119,7 @@ function buildCharts(sample) {
     var bubbleLayout = {
       title: "Bacteria Cultures Per Sample",
       xaxis: { title: "OTU ID" },
-      margin: { t: 60 },
+      margin: { t: 70 },
       hovermode: "closest"
     };
 
