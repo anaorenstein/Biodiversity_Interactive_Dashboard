@@ -34,8 +34,8 @@ function buildMetadata(sample) {
   d3.json("samples.json").then((data) => {
     var metadata = data.metadata;
     // Filter the data for the object with the desired sample number
-    var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
-    var result = resultArray[0];
+    var subjectMetaDataArray = metadata.filter(sampleObj => sampleObj.id == sample);
+    var subjectMetaData = subjectMetaDataArray[0];
     // Use d3 to select the panel with id of `#sample-metadata`
     var PANEL = d3.select("#sample-metadata");
 
@@ -45,45 +45,34 @@ function buildMetadata(sample) {
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
-    Object.entries(result).forEach(([key, value]) => {
+    Object.entries(subjectMetaData).forEach(([key, value]) => {
       PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
     });
-
   });
 }
 
 // 1. Create the buildCharts function.
-function buildCharts(sample) {
+function buildCharts(subjectID) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
-      // Create a variable that holds the samples array. 
-      var samples = data.samples;
-      // Create a variable that filters the samples for the object with the desired sample number.
-      var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
-      // 1. Create a variable that filters the metadata array for the object with the desired sample number.
-      var result = resultArray[0];
-      // Create a variable that holds the first sample in the array.
-      var firstSample = result;
-  
-      // 2. Create a variable that holds the first sample in the metadata array.
-      var firstSampleMeta = data.metadata[0];
-  
-      // Create variables that hold the otu_ids, otu_labels, and sample_values.
-      var otu_ids = firstSample.otu_ids;
-      var otu_labels = firstSample.otu_labels;
-      var sample_values = firstSample.sample_values;
-  
-      // 3. Create a variable that holds the washing frequency.
-      var washFreq = firstSampleMeta.wfreq;
-      // Create the yticks for the bar chart.
-      var yTicks = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000];
-    // 7. Create the yticks for the bar chart.
-    // Hint: Get the the top 10 otu_ids and map them in descending order  
-    //  so the otu_ids with the most bacteria are last. 
-
+    // Create a variable that holds the samples array. 
+    var samples = data.samples;
+    // Create a variable that filters the samples for the object with the desired sample number.
+    var subjectDataArray = samples.filter(sampleObj => sampleObj.id == subjectID);
+    // 1. Create a variable that filters the metadata array for the object with the desired sample number.
+    var subjectData = subjectDataArray[0];
+    // Create variables that hold the otu_ids, otu_labels, and sample_values.
+    var otu_ids = subjectData.otu_ids;
+    var otu_labels = subjectData.otu_labels;
+    var sample_values = subjectData.sample_values;
+    // 3. Create a variable that holds the washing frequency.
+    var metadata = data.metadata;
+    var subjectMetaDataArray = metadata.filter(sampleObj => sampleObj.id == subjectID);
+    var subjectMetaData = subjectMetaDataArray[0];
+    var washFreq = subjectMetaData.wfreq;
+    
     var yticks = otu_ids.slice(0, 10).map(otu_id => `OTU ${otu_id}`).reverse();
-
     // 8. Create the trace for the bar chart. 
     var barData = [{
       x: sample_values.slice(0, 10).reverse(),
@@ -100,7 +89,6 @@ function buildCharts(sample) {
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
-
 
     // 1. Create the trace for the bubble chart.
     var bubbleData = [{
@@ -122,11 +110,8 @@ function buildCharts(sample) {
       margin: { t: 70 },
       hovermode: "closest"
     };
-
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
-
-    var washFreq = firstSampleMeta.wfreq;
 
     var gaugeData = [ {
       domain: { x: [0, 1], y: [0, 1] },
