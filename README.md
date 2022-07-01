@@ -35,5 +35,17 @@ Using [this](https://anaorenstein.github.io/Plotly_deploy/) website, the user ca
 
 The interactive dashboard that was created can be used by the volunteers, or research subjects who wish to look up the results of their own culture, as well as the scientific community and fellow researcher who wish to complement and collaborate on more research.
 
+Screenshots of the dashboard can be seen below:
+
+
+
+![](Images/plotly-one.png)
+
+
+
+![](Images/plotly-two.png)
+
+
+
 Going forward, similar studies can be integrated and combined to this scientific dataset. The HTML dashboard can be enhanced, and more complex structures may be added to our HTML template.
 
